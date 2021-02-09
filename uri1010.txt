@@ -1,0 +1,28 @@
+import java.util.Locale;
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+		
+		int cod1 = sc.nextInt();
+		int numPeca1 = sc.nextInt();
+		double valUnit = sc.nextDouble();
+		
+		double valInicial1 = numPeca1 * valUnit;
+		
+		int cod2 = sc.nextInt();
+		int numPeca2 = sc.nextInt();
+		double valUnit2 = sc.nextDouble();
+		
+		double valInicial2 = numPeca2 * valUnit2;
+		
+		double TOTAL = valInicial1 + valInicial2;
+		
+		System.out.printf("VALOR A PAGAR: R$ %.2f%n", TOTAL);
+			
+		sc.close();
+	}
+}
