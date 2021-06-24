@@ -1,0 +1,46 @@
+package maladireta;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+public class Testando {
+	
+	/*
+	 * A finalidade foi conseguir parcelar um valor com ponto flutuante
+	 * sem perder nenhum centavo na conta. Esse é um cálculo interessante
+	 * para quando se quer parcelar o preço de algum produto sem você perder
+	 * nenhum centavo caso some o valor de todas as parcelas
+	 */
+
+	@Test
+	public void testParcelarValorSemPerderNenhumCentavo() {
+		BigDecimal total = new BigDecimal("100.00");
+		BigDecimal parcelas = new BigDecimal("3.00"); // -> para valores não exatos
+//		BigDecimal parcelas = new BigDecimal("2.00"); -> para valores exatos
+		
+		List<BigDecimal> valorParcelas = new ArrayList<>();
+		BigDecimal valor = total.divide(parcelas, 2, RoundingMode.HALF_UP);
+		BigDecimal resto = total.subtract(valor.multiply(parcelas)).setScale(2);
+		
+		for(int i = 0; i < parcelas.intValue(); i++) {
+			if((i+1) != parcelas.intValue()) {
+				valorParcelas.add(valor);
+			} else {
+				BigDecimal ultimaParcela = valor.add(resto);
+				valorParcelas.add(ultimaParcela);
+			}
+		}
+		
+		BigDecimal confirmarTotal = BigDecimal.ZERO;
+		for (BigDecimal parcela : valorParcelas) {
+			confirmarTotal = confirmarTotal.add(parcela);
+			System.out.println(parcela);
+		}
+		
+		System.out.println("Confirmando total: " + confirmarTotal);
+	}
+}
